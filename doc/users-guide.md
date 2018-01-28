@@ -55,6 +55,8 @@ The viewing windows are located under the window menu.  Most of the feedback fro
 
 #### ALU
 
+![ALU](https://raw.githubusercontent.com/jasonv/MythSim/master/doc/ALUWindow.gif)
+
 The ALU provides a log of the ALU operations.  In addition it shows other memory transfer operations on the Memory Interface. 
 
 Shows the current state of the data path.  Red highlighting indicates that the signal was set in the current micro instruction.  When a value is not explicitly set in microcode it will not appear as red.   Notice that va_sel, vr0_write, and some other red signals are not control signals.  
@@ -67,13 +69,19 @@ Notice that the alu inputs from the previous clock cycle are written in parenthe
 
 #### Memory
 
+![Memory](https://raw.githubusercontent.com/jasonv/MythSim/master/doc/MemoryWindow.gif)
+
 Shows the current values in main memory.  The Address column contains the address of the low byte in each row.  The (low, high) column shows the low and high byte in two's complement form.  The low and high columns show these bytes in binary form.  The green highlight reminds us that we are dealing with main memory.  The memory is 256 bytes long with addresses ranging from 0 to 255
 
 #### Memory File
 
+![Memory File](https://raw.githubusercontent.com/jasonv/MythSim/master/doc/MemoryFileWindow.gif)
+
 Shows the current memory file.  The green reminds us that we are dealing with main memory.
 
 #### Registers
+
+![Registers](https://raw.githubusercontent.com/jasonv/MythSim/master/doc/RegistersWindow.gif)
 
 Shows a log of register values for each clock cycle.  Each line has the 12 MythSim registers and the clock cycle in brackets.  The blue highlight reminds us that we are dealing with registers.
 
@@ -81,11 +89,15 @@ Adjusting the size of the window can provide different useful views.  Shrink the
 
 #### Ucode
 
+![Ucode](https://raw.githubusercontent.com/jasonv/MythSim/master/doc/UcodeWindow.gif)
+
 Shows the ucode in tabular form. When the reload button is pressed this window is reloaded with the current values in the ucode file. These values can not be changes while a program is running. Each row of this table corresponds to a micro instruction in the ucode file.
 
 From a hardware perspective the ucode window shows the values in the memory located in the control-unit. Each row is a control word and each column is a control signal.
 
 #### Ucode File
+
+![Ucode File](https://raw.githubusercontent.com/jasonv/MythSim/master/doc/UcodeFileWindow.gif)
 
 Shows the ucode file with the current micro instruction highlighted.  The red highlight reminds us that we are dealing with a micro instruction.
 
