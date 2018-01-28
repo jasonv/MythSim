@@ -34,6 +34,8 @@ The MythSim Application has a Main Window and a set of Viewing Windows.
 
 ### Main Window
 
+![Main Window](https://raw.githubusercontent.com/jasonv/MythSim/master/doc/MainWindow.gif)
+
 The main window contains the main menu bar, tool bar, output screen and status bar.
 
 #### 1. Main Menu
