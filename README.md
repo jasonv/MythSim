@@ -8,3 +8,4 @@ MythSim is a visual microcode simulator. It can take microcode, along with progr
 ### Documentation
 
 * [User's Guide](https://github.com/jasonv/MythSim/blob/master/doc/users-guide.md)
+* [Examples](examples)
