@@ -13,7 +13,7 @@
 ## Sample with Many Comments ##
 
 * [sample_com.mem](sample_com.mem)
-* [sample_com.ucode] (sample_com.ucode)
+* [sample_com.ucode](sample_com.ucode)
 
 ## Example 1 ##
 
