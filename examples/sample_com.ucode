@@ -1,0 +1,57 @@
+// sample_com.ucode
+
+fetch0: a_sel=7, b_sel=7, alu_sel=AND, r6_write, mar_sel=LOAD;
+
+fetch1: r7_write, a_sel=6, alu_sel=ADDA, c_in, read, ir0_sel=LOAD,
+        if wait then goto fetch1 endif;
+
+fetch2: a_sel=7, b_sel=7, alu_sel=AND, r6_write, mar_sel=LOAD;
+
+fetch3: r7_write, a_sel=6, alu_sel=ADDA, c_in, read, ir1_sel=LOAD,
+	if wait then goto fetch3 endif;
+
+        goto opcode[IR_OPCODE];
+
+// 0) NO_OP
+opcode[0]: goto fetch0;
+
+// 1) ADD (ri <- rj + rk)
+opcode[1]: ri_sel, rj_sel, rk_sel, alu_sel=ADD, goto fetch0; 
+
+// 2) LOAD_IMMEDIATE (ri <- ir_const8)
+opcode[2]: result_sel=IR_CONST8, ri_sel, goto fetch0;
+
+// 3) BRANCH_IF_ZERO (bz r3, ir_const8)
+opcode[3]: a_sel=3, b_sel=3, alu_sel=SUBA, r6_write, result_sel=IR_CONST8
+           if c_out then goto fetch0 else goto branch endif;
+		
+// 4) BRANCH_IF_NOT_ZERO (bnz r3, ir_const8)
+opcode[4]: a_sel=3, b_sel=3, alu_sel=SUBA, r6_write, result_sel=IR_CONST8,
+           if c_out then goto branch else goto fetch0 endif;
+
+// 5) JUMP (jump ir_const8)
+opcode[5]: a_sel=0, b_sel=0, alu_sel=AND, r6_write, result_sel=IR_CONST8
+           goto branch;
+
+// 6) MOVE (ri <- rj)
+opcode[6]: ri_sel, rj_sel, alu_sel=ADDA, goto fetch0;
+
+// 7) STORE_BYTE (mem[rj] <= rk)
+opcode[7]: rj_sel, alu_sel=ADDA, mar_sel=LOAD, goto opcode7.1; 
+
+// 8) LOAD_BYTE (ri <- mem[rj])
+opcode[8]: rj_sel, alu_sel=ADDA, mar_sel=LOAD, goto opcode8.1; 
+
+// 9) HALT
+opcode[9]: goto opcode[9];
+
+// (extended area and functions)
+branch: r7_write, a_sel=7, b_sel=6, alu_sel=ADD, goto fetch0;
+opcode7.1: a_sel=5, b_sel=5, alu_sel=SUB, c_in, r5_write;
+		rk_sel, a_sel=5, alu_sel=OR, mdr_sel=LOAD_ALU;
+memwrite: write,
+		if wait then goto memwrite else goto fetch0 endif;
+opcode8.1: read, mdr_sel=LOAD_MEM, 
+		if wait then goto opcode8.1 endif;
+		result_sel=MDR, ri_sel, goto fetch0;
+

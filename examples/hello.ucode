@@ -1,0 +1,17 @@
+// =========FETCH=========
+fetch0:    a_sel=7, b_sel=7,  alu_sel=AND,  r6_write, mar_sel=LOAD;
+fetch1:    a_sel=6, c_in,     alu_sel=ADDA, r7_write, ir0_sel=LOAD, read, if wait then goto fetch1 endif;
+fetch2:    a_sel=7, b_sel=7,  alu_sel=AND,  r6_write, mar_sel=LOAD;
+fetch3:    a_sel=6, c_in,     alu_sel=ADDA, r7_write, ir1_sel=LOAD, read, if wait then goto fetch3 endif;
+
+// =========OPCODES=========
+// 0) NO_OP
+// 1) ADD (ri <- rj + rk)
+// 2) LOAD_IMMEDIATE (ri <- ir_const8)
+// 3) HALT
+
+switch:	   goto opcode[IR_OPCODE];
+opcode[0]: goto fetch0;
+opcode[1]: ri_sel, rj_sel, rk_sel, alu_sel=ADD, goto fetch0;
+opcode[2]: result_sel=IR_CONST8, ri_sel, goto fetch0;
+opcode[3]: goto opcode[3];

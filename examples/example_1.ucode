@@ -1,0 +1,22 @@
+// Example 1 - The Fetch Microcode
+// example_1.ucode
+
+// 1) Load program counter into MAR.
+a: a_sel=7, b_sel=7, alu_sel=OR, mar_sel=LOAD;
+
+// 2) Read in second half of instruction.
+b: read, ir0_sel=LOAD;
+c: if wait then goto b endif;
+
+// 3) Increment Program Counter
+d: a_sel=7, c_in, alu_sel=ADDA, result_sel=ALU, r7_write;
+
+// 4) Load program counter into MAR.
+e: a_sel=7, b_sel=7, alu_sel=OR, mar_sel=LOAD;
+
+// 5) Read in first half of instruction.
+f: read, ir1_sel=LOAD;
+g: if wait then goto f endif;
+
+// 6) Increment Program Counter
+h: a_sel=7, c_in, alu_sel=ADDA, result_sel=ALU, r7_write;

@@ -1,0 +1,69 @@
+sample_com.mem
+Adds numbers beginning at addr 32,
+until a 0 is found.
+Result is at addr 30. 
+%
+
+// LOAD_IMMEDIATE (r0 <- 0)
+0: 0             // ir_const8=0
+1: 000010 00     // ir_opcode=2, ir_ri=r0
+
+// LOAD_IMMEDIATE (r1 <- 1)
+2: 1               // ir_const8=1
+3: 000010 01       // ir_opcode=2, ir_ri=r1
+
+// LOAD_IMMEDIATE (r2 <- 32)
+4: 32              // ir_const8=32
+5: 000010 10       // ir_opcode=2, ir_ri=r2
+
+
+
+// Begin Loop Forever
+
+// (do nothing)
+6: 0               
+7: 0               
+
+// LOAD_BYTE (r3 <- mem[r2])
+8: 10 000000       // ir_rj=2
+9: 001000 11       // ir_opcode=8, ir_ri=3
+
+// BRANCH_IF_ZERO (bz r3, 6)
+10: 00 00 0110     // ir_const8=6
+11: 000011 00      // ir_opcode=3, ir_ri=0
+
+// ADD (r0 <- r0 + r3)
+12: 00 11 0000     // ir_rj=0, ir_rk=3
+13: 000001 00      // ir_opcode=1, ir_ri=0
+
+// ADD (r2 <- r2 + r1)
+14: 10 01 0000     // ir_rj=2, ir_rk=1
+15: 000001 10      // ir_opcode=1, ir_ri=2
+
+// JUMP (jump -10)
+16: 11110110       // ir_const8=-10
+17: 000101 00      // ir_opcode=5
+
+// End Loop
+
+
+
+// LOAD_IMMEDIATE (r1 <- 30)
+18: 30             // ir_const8=30
+19: 000010 01      // ir_opcode=2, ir_ri=1
+
+// STORE_BYTE (mem[r0] <- r1)
+20: 01 00 0000     // ir_rj=1, ir_rk=0
+21: 000111 00      // ir_opcode=7
+
+// HALT
+22: 0              //
+23: 001001 00      // ir_opcode=9
+
+// Data Area
+32: 11
+33: 6
+34: 8
+35: 9
+36: 5
+37: 0 // Zero marks end.

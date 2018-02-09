@@ -1,0 +1,22 @@
+Top section of program before the % can be used
+for program comments.
+Sum immediate constants into r0.
+
+%                             // Begin code section
+// LOAD_IMMEDIATE r0<- 3  
+0: 3                           // values can be decimal..
+1: 000010 00             //   .. or binary
+
+// LOAD_IMMEDIATE r1<- 2  
+2: 2
+3: 000010 01
+
+// ADD r0 <- r0 + r1      
+4: 00 01 0000            // binary values can have spaces
+5: 000001 00  
+       
+// HALT                   
+10: 0                             // Should now have 5 in r0      
+11: 000011 00
+
+// End

@@ -1,0 +1,37 @@
+// sample.ucode
+fetch0: a_sel=7, b_sel=7, alu_sel=AND, r6_write, mar_sel=LOAD;
+fetch1: r7_write, a_sel=6, alu_sel=ADDA, c_in, read, ir0_sel=LOAD,
+		if wait then goto fetch1 endif;
+fetch2: a_sel=7, b_sel=7, alu_sel=AND, r6_write, mar_sel=LOAD;
+fetch3: r7_write, a_sel=6, alu_sel=ADDA, c_in, read, ir1_sel=LOAD,
+		if wait then goto fetch3 endif;
+		goto opcode[IR_OPCODE];
+opcode[0]: goto fetch0;		// noop
+opcode[1]: ri_sel, rj_sel, rk_sel, alu_sel=ADD, goto fetch0; 
+		// ri <- rj + rk
+opcode[2]: result_sel=IR_CONST8, ri_sel, goto fetch0; // ri <- const8
+opcode[3]: a_sel=3, b_sel=3, alu_sel=SUBA, r6_write, result_sel=IR_CONST8
+		if c_out then goto fetch0 else goto branch endif;
+		// bz r3, rel_addr
+opcode[4]: a_sel=3, b_sel=3, alu_sel=SUBA, r6_write, result_sel=IR_CONST8,
+		if c_out then goto branch else goto fetch0 endif;
+		// bnz r3, rel_addr
+opcode[5]: a_sel=0, b_sel=0, alu_sel=AND, r6_write, result_sel=IR_CONST8
+		goto branch;
+		// jump rel_addr
+opcode[6]: ri_sel, rj_sel, alu_sel=ADDA, goto fetch0;   // ri <- rj
+opcode[7]: rj_sel, alu_sel=ADDA, mar_sel=LOAD, goto opcode7.1; 
+		// MEM[rj] <- rk
+opcode[8]: rj_sel, alu_sel=ADDA, mar_sel=LOAD, goto opcode8.1; 
+		// ri <- MEM[rj]
+opcode[9]: goto opcode[9];  // end
+branch: r7_write, a_sel=7, b_sel=6, alu_sel=ADD, goto fetch0;
+opcode7.1: a_sel=5, b_sel=5, alu_sel=SUB, c_in, r5_write;
+		rk_sel, a_sel=5, alu_sel=OR, mdr_sel=LOAD_ALU;
+memwrite: write,
+		if wait then goto memwrite else goto fetch0 endif;
+opcode8.1: read, mdr_sel=LOAD_MEM, 
+		if wait then goto opcode8.1 endif;
+		result_sel=MDR, ri_sel, goto fetch0;
+
+
