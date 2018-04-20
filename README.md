@@ -1,7 +1,7 @@
 # MythSim
 ## The Mythical CPU Simulator for Real Students
 
-![image](/doc/mainframe.gif)
+![image](/doc/allwindows.png)
 
 ### Summary
 
