@@ -1,0 +1,2 @@
+jflex MemParser.flex
+pause

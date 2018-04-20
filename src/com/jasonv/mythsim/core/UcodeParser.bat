@@ -1,0 +1,2 @@
+jflex UcodeParser.flex
+pause
